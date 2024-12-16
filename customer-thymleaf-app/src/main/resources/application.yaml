@@ -1,0 +1,17 @@
+spring:
+  application:
+    name: customer-thymleaf-app
+  datasource:
+    url: jdbc:h2:mem:customers-db
+  h2:
+    console:
+      enabled: true
+  security:
+    oauth2:
+      client:
+        registration:
+          google:
+            client-id: 111829525243-1lkoa30b8ns355sstrf2fqd9autjp598.apps.googleusercontent.com
+            client-secret: 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
+server:
+  port: 8085
