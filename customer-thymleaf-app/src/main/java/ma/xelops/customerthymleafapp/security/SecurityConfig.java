@@ -50,7 +50,6 @@ public class SecurityConfig {
 
             private static String getUserNameAttributeName(OAuth2UserRequest userRequest, String clientRegistrationId) {
                 String userNameAttributeName;
-                System.out.println(clientRegistrationId);
                 if ("google".equals(clientRegistrationId)) {
                     userNameAttributeName = "email";
                 } else if ("github".equals(clientRegistrationId)) {

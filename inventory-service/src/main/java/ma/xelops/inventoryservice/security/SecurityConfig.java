@@ -1,5 +1,6 @@
 package ma.xelops.inventoryservice.security;
 
+import lombok.AllArgsConstructor;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.config.Customizer;
@@ -16,14 +17,17 @@ import java.util.List;
 @Configuration
 @EnableWebSecurity
 @EnableMethodSecurity(prePostEnabled = true)
+@AllArgsConstructor
 public class SecurityConfig {
+    private final   JwtAuthConverter jwtAuthConverter;
     @Bean
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
         return http
                 .cors(Customizer.withDefaults())
                 //.authorizeHttpRequests(ar-> ar.requestMatchers("/products/**").permitAll())
                 .authorizeHttpRequests(ar-> ar.anyRequest().authenticated())
-                .oauth2ResourceServer(oauth2-> oauth2.jwt(Customizer.withDefaults()))
+                .oauth2ResourceServer(oauth2-> oauth2.jwt(jwt->
+                        jwt.jwtAuthenticationConverter(jwtAuthConverter)))
                 .build();
     }
 
