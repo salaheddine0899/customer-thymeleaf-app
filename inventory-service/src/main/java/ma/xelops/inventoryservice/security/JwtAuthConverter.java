@@ -1,6 +1,6 @@
 package ma.xelops.inventoryservice.security;
 
-import lombok.AllArgsConstructor;
+import lombok.RequiredArgsConstructor;
 import org.springframework.core.convert.converter.Converter;
 import org.springframework.security.authentication.AbstractAuthenticationToken;
 import org.springframework.security.core.GrantedAuthority;
@@ -17,7 +17,7 @@ import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
 @Component
-@AllArgsConstructor
+@RequiredArgsConstructor
 public class JwtAuthConverter implements Converter<Jwt, AbstractAuthenticationToken> {
     private final JwtGrantedAuthoritiesConverter jwtGrantedAuthoritiesConverter;
 
@@ -37,7 +37,9 @@ public class JwtAuthConverter implements Converter<Jwt, AbstractAuthenticationTo
         }
         realmAccess = jwt.getClaim("realm_access");
         roles = (Collection<String>) realmAccess.get("roles");
-        return  roles.stream().map(SimpleGrantedAuthority::new).collect(Collectors.toSet());
+        return  roles.stream()
+                .map(role -> new SimpleGrantedAuthority("ROLE_" + role))
+                .collect(Collectors.toSet());
 
     }
 }

@@ -43,4 +43,9 @@ function initializeKeycloak(keycloak: KeycloakService) {
   ],
   bootstrap: [AppComponent],
 })
-export class AppModule {}
+export class AppModule {
+  constructor(private keycloakService: KeycloakService) {
+    // @ts-ignore
+    initializeKeycloak();
+  }
+}

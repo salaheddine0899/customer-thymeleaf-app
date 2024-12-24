@@ -16,7 +16,7 @@ import java.util.List;
 
 @Configuration
 @EnableWebSecurity
-@EnableMethodSecurity(prePostEnabled = true)
+@EnableMethodSecurity
 @AllArgsConstructor
 public class SecurityConfig {
     private final   JwtAuthConverter jwtAuthConverter;
@@ -40,4 +40,5 @@ public class SecurityConfig {
         source.registerCorsConfiguration("/**", configuration);
         return source;
     }
+
 }
