@@ -24,7 +24,7 @@ public class SecurityConfig {
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
         return http
                 .cors(Customizer.withDefaults())
-                //.authorizeHttpRequests(ar-> ar.requestMatchers("/products/**").permitAll())
+                .authorizeHttpRequests(ar-> ar.requestMatchers("/products/**").permitAll())
                 .authorizeHttpRequests(ar-> ar.anyRequest().authenticated())
                 .oauth2ResourceServer(oauth2-> oauth2.jwt(jwt->
                         jwt.jwtAuthenticationConverter(jwtAuthConverter)))

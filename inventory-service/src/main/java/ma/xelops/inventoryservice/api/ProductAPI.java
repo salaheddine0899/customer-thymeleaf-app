@@ -17,7 +17,7 @@ public class ProductAPI {
     private final ProductRepository productRepository;
 
     @GetMapping
-    @PreAuthorize("hasRole('ADMIN')")
+    //@PreAuthorize("hasRole('ADMIN')")
     public List<Product> getAllProducts() {
         return productRepository.findAll();
     }
