@@ -1,4 +1,6 @@
 import { useEffect, useState } from 'react';
+import axios from 'axios';
+import keycloak from "../keycloak.tsx";
 
 interface Product {
     id: number;
@@ -8,17 +10,31 @@ interface Product {
     quantity: number;
 }
 
-const Products = () => {
+const Products = ({authenticated}:{authenticated:boolean}) => {
     const [products, setProducts] = useState<Product[]>([]);
 
     useEffect(() => {
         const fetchProducts = async () => {
-            const response = await fetch('http://localhost:8090/products');
-            const data = await response.json();
-            setProducts(data);
+            // Get the access token from Keycloak
+            const token = keycloak.token;
+
+            try {
+                // Use axios to make a GET request with the access token in the Authorization header
+                const response = await axios.get('http://localhost:8090/products', {
+                    headers: {
+                        Authorization: `Bearer ${token}`,
+                    },
+                });
+                // Set the products data received from the API
+                setProducts(response.data);
+            } catch (error) {
+                console.error("Error fetching products:", error);
+            }
         };
 
-        fetchProducts();
+        if (authenticated) {
+            fetchProducts(); // Fetch products when authenticated
+        }
     }, []);
 
     return (
